@@ -39,7 +39,7 @@ def game(id,column):
     c = column - 1
     if request.method == 'POST':
         if c > -1:
-            table.CanAdd1(c)
+            table.CanAdd(c,1)
             opponent.DoMove(table)
         database.updateGame(id,table)
 
