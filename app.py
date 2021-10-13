@@ -24,23 +24,25 @@ def index():
             return redirect('/')
 
         id = database.createGame(playername,diff)
-        return redirect(url_for('game', id=id,column = 0))
+        return redirect(url_for('game', id=id))
     else:
         scores = database.getHighscoreHomepage()
         return render_template("home.html",scores=scores)
         
 
-@app.route('/game/<int:id>/<int:column>',methods=['GET', 'POST'])
-def game(id,column):
+@app.route('/game/<int:id>',methods=['GET', 'POST'])
+def game(id):
     score = database.getScore(id)
     table = database.getGame(id)
     opponent = EasyOpponent()
 
-    c = column - 1
+   # c = column - 1
     if request.method == 'POST':
-        if c > -1:
-            table.CanAdd(c,1)
-            opponent.DoMove(table)
+        column = request.form['column']
+        c = int(column)
+
+        table.CanAdd(c,1)
+        opponent.DoMove(table)
         database.updateGame(id,table)
 
     return render_template("game.html",score=score,table=table)
