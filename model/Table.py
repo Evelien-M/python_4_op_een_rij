@@ -11,7 +11,6 @@ class Table:
             if value == 0:
                 if y == self.h - 1:
                     self.Table[y][x] = input 
-                    print(value)
                     return True
                 else: 
                     if self.Table[y + 1][x] != 0:
