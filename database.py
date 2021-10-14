@@ -14,8 +14,8 @@ def getHighscoreHomepage():
     con = sqlite3.connect(db_path)
     cur = con.cursor()
     list = []
-    for r in cur.execute('SELECT * FROM score WHERE won = 1 ORDER BY time ASC LIMIT 10'):
-        score = Score(r[0],r[1],r[2],r[3],r[4],r[5],r[6])
+    for r in cur.execute('SELECT * FROM score WHERE status_id = 2 ORDER BY time ASC LIMIT 10'):
+        score = Score(r[0],r[1],r[2],r[3],r[4],r[5])
         list.append(score)
     
     con.close()
@@ -26,7 +26,7 @@ def createGame(name,difficulty):
     try:
         con = sqlite3.connect(db_path)
         cur = con.cursor()
-        cur.execute("INSERT INTO score VALUES (NULL, '"+ str(name) +"', 0, '"+ str(datetime.datetime.now()) +"', '"+ str(difficulty) +"', 0,0)")
+        cur.execute("INSERT INTO score VALUES (NULL, '"+ str(name) +"', 0, '"+ str(datetime.datetime.now()) +"', '"+ str(difficulty) +"', 1)")
         id = cur.lastrowid
         for x in range(7): 
             for y in range(6):
@@ -66,7 +66,7 @@ def getScore(id):
         cur = con.cursor()
         
         for r in cur.execute('SELECT * FROM score WHERE id = '+ str(id) + ' LIMIT 1'):
-            score = Score(id,r[1],r[2],r[3],r[4],r[5],r[6])
+            score = Score(id,r[1],r[2],r[3],r[4],r[5])
             
         con.close()
         return score

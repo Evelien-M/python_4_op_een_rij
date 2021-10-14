@@ -1,8 +1,8 @@
 from flask import Flask, request, render_template, url_for, redirect
 import database
 import datetime
-import sys
 from opponent.easyOpponent import EasyOpponent
+from model.Rules import Rules
 from model.Score import Score
 from model.Table import Table
 import test
@@ -13,7 +13,6 @@ table = None
 
 @app.route('/',methods=['GET', 'POST'])
 def index():
-    sys.stdout.flush()
     if request.method == 'POST':
         playername = request.form['name'].upper()
         if len(playername) > 45 or len(playername) < 1:
@@ -35,15 +34,19 @@ def game(id):
     score = database.getScore(id)
     table = database.getGame(id)
     opponent = EasyOpponent()
+    rule = Rules()
 
    # c = column - 1
     if request.method == 'POST':
         column = request.form['column']
         c = int(column)
 
-        table.CanAdd(c,1)
-        opponent.DoMove(table)
-        database.updateGame(id,table)
+        if table.CanAdd(c,1):
+            rule.Check(table,score,1)
+            if score.status == 1:
+                opponent.DoMove(table)
+            # rule.Check(table,score,2)
+            database.updateGame(id,table)
 
     return render_template("game.html",score=score,table=table)
 

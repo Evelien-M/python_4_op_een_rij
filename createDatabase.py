@@ -9,7 +9,7 @@ cur = con.cursor()
 
 # Create table
 
-cur.execute("CREATE TABLE IF NOT EXISTS score (id INTEGER, player VARCHAR(45) NOT NULL, time INT NOT NULL, date datetime NOT NULL, difficulty varchar(45) NOT NULL, completed tinyint(4) NOT NULL, won int(11) NOT NULL, PRIMARY KEY(id))")
+cur.execute("CREATE TABLE IF NOT EXISTS score (id INTEGER, player VARCHAR(45) NOT NULL, time INT NOT NULL, date datetime NOT NULL, difficulty varchar(45) NOT NULL, status_id int(11) NOT NULL, PRIMARY KEY(id))")
 
 cur.execute('''CREATE TABLE `game_table` (
   `id` int(11) NOT NULL,
@@ -18,13 +18,23 @@ cur.execute('''CREATE TABLE `game_table` (
   `value` int(11)
 )''')
 
+cur.execute('''CREATE TABLE `game_status` (
+  `id` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL
+)''')
+
 con.commit()
 
 # Insert a row of data
-cur.execute("INSERT INTO score VALUES (1, 'MARCO BORSATO', 10, '2021-10-11 00:00:00', 'easy', 1,1)")
-cur.execute("INSERT INTO score VALUES (2, 'MARCO BORSATO', 12, '2021-10-11 00:00:00', 'easy', 0,0)")
-cur.execute("INSERT INTO score VALUES (3, 'GUUS MEEUWIS', 15, '2021-10-11 00:00:00', 'easy', 1,1)")
-cur.execute("INSERT INTO score VALUES (4, 'GUUS MEEUWIS', 16, '2021-10-11 00:00:00', 'hard', 1,2)")
+cur.execute("INSERT INTO game_status VALUES (1, 'playable')")
+cur.execute("INSERT INTO game_status VALUES (2, 'won')")
+cur.execute("INSERT INTO game_status VALUES (3, 'lost')")
+cur.execute("INSERT INTO game_status VALUES (4, 'tie')")
+
+cur.execute("INSERT INTO score VALUES (1, 'MARCO BORSATO', 10, '2021-10-11 00:00:00', 'easy', 2)")
+cur.execute("INSERT INTO score VALUES (2, 'MARCO BORSATO', 12, '2021-10-11 00:00:00', 'easy', 4)")
+cur.execute("INSERT INTO score VALUES (3, 'GUUS MEEUWIS', 15, '2021-10-11 00:00:00', 'easy', 3)")
+cur.execute("INSERT INTO score VALUES (4, 'GUUS MEEUWIS', 16, '2021-10-11 00:00:00', 'hard', 2)")
 
 # Save (commit) the changes
 con.commit()
