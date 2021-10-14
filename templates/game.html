@@ -21,37 +21,37 @@
                     <form action="/game/{{score.id}}" id="auto-submit" method="POST">
                         <input type="hidden" name="column" id="columnId" value="">
                         <th>
-                            {% if table.Table[0][0] == 0 %}
+                            {% if table.Table[0][0] == 0 and score.status == 1 %}
                                 <button type="button" value="Add" onclick="setColumn(0)" name="0" class="btn btn-primary">Add</button>  
                             {% endif %}
                         </th>
                         <th>
-                            {% if table.Table[0][1] == 0 %}
+                            {% if table.Table[0][1] == 0 and score.status == 1 %}
                                 <button type="button" value="Add" onclick="setColumn(1)" name="1" class="btn btn-primary">Add</button>
                             {% endif %}
                         </th>
                         <th>
-                            {% if table.Table[0][2] == 0 %}
+                            {% if table.Table[0][2] == 0 and score.status == 1 %}
                                 <button type="button" value="Add" onclick="setColumn(2)" name="2" class="btn btn-primary">Add</button>
                             {% endif %}
                         </th>
                         <th>
-                            {% if table.Table[0][3] == 0 %}
+                            {% if table.Table[0][3] == 0 and score.status == 1 %}
                                 <button type="button" value="Add" onclick="setColumn(3)" name="3" class="btn btn-primary">Add</button>
                             {% endif %}
                         </th>
                         <th>
-                            {% if table.Table[0][4] == 0 %}
+                            {% if table.Table[0][4] == 0 and score.status == 1 %}
                                 <button type="button" value="Add" onclick="setColumn(4)" name="4" class="btn btn-primary">Add</button>
                             {% endif %}
                         </th>
                         <th>
-                            {% if table.Table[0][5] == 0 %}
+                            {% if table.Table[0][5] == 0 and score.status == 1 %}
                                 <button type="button" value="Add" onclick="setColumn(5)" name="5" class="btn btn-primary">Add</button>
                             {% endif %}
                         </th>
                         <th>
-                            {% if table.Table[0][6] == 0 %}
+                            {% if table.Table[0][6] == 0 and score.status == 1 %}
                                 <button type="button" value="Add" onclick="setColumn(6)" name="6" class="btn btn-primary">Add</button>
                             {% endif %}
                         </th>

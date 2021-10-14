@@ -1,12 +1,10 @@
 from flask import Flask, request, render_template, url_for, redirect
 import database
 import datetime
-from opponent.easyOpponent import EasyOpponent
 from model.Rules import Rules
+from opponent.easyOpponent import EasyOpponent
 from model.Score import Score
 from model.Table import Table
-import test
-
 
 app = Flask(__name__)
 table = None
@@ -41,12 +39,16 @@ def game(id):
         column = request.form['column']
         c = int(column)
 
-        if table.CanAdd(c,1):
-            rule.Check(table,score,1)
-            if score.status == 1:
-                opponent.DoMove(table)
-            # rule.Check(table,score,2)
-            database.updateGame(id,table)
+        if score.status == 1:
+            if table.CanAdd(c,1):
+                if not rule.Check(table,score,1):
+                    score.status = 2
+                if score.status == 1:
+                    opponent.DoMove(table)
+                    if not rule.Check(table,score,2):
+                        score.status = 3
+                database.updateGame(id,table)
+                database.updateScore(score)
 
     return render_template("game.html",score=score,table=table)
 

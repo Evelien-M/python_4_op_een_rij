@@ -87,6 +87,16 @@ def updateGame(id,table):
     except Exception as e:
         print(str(e))
 
+def updateScore(score):
+    try:
+        con = sqlite3.connect(db_path)
+        cur = con.cursor()
+        cur.execute('UPDATE score SET time=' + str(score.time) + ', status_id=' + str(score.status) + ' WHERE id = '+ str(score.id))
+        con.commit()  
+        con.close()
+    except Exception as e:
+        print(str(e))
+
 
 
 
