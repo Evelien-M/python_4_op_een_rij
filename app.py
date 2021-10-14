@@ -1,6 +1,5 @@
 from flask import Flask, request, render_template, url_for, redirect
 import database
-import datetime
 from model.Rules import Rules
 from opponent.easyOpponent import EasyOpponent
 from model.Score import Score
@@ -51,6 +50,7 @@ def game(id):
                     if table.IsCompleted():
                         score.status = 4
                         
+                score.UpdateTime()
                 database.updateScore(score)
                 score = database.getScore(id)
                 database.updateGame(id,table)

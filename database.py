@@ -26,7 +26,7 @@ def createGame(name,difficulty):
     try:
         con = sqlite3.connect(db_path)
         cur = con.cursor()
-        cur.execute("INSERT INTO score VALUES (NULL, '"+ str(name) +"', 0, '"+ str(datetime.datetime.now()) +"', '"+ str(difficulty) +"', 1)")
+        cur.execute("INSERT INTO score VALUES (NULL, '"+ str(name) +"', 0, '"+ str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) +"', '"+ str(difficulty) +"', 1)")
         id = cur.lastrowid
         for x in range(7): 
             for y in range(6):
