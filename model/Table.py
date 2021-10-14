@@ -18,7 +18,16 @@ class Table:
         return False
 
     def IsCompleted(self):
-        pass
+        count = 0
+        for x in range(self.w):
+            if self.Table[0][x] != 0:
+                count = count + 1
+
+        if count == self.w:
+            return True
+
+        return False
+
 
         
 

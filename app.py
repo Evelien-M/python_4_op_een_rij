@@ -34,7 +34,6 @@ def game(id):
     opponent = EasyOpponent()
     rule = Rules()
 
-   # c = column - 1
     if request.method == 'POST':
         column = request.form['column']
         c = int(column)
@@ -47,6 +46,11 @@ def game(id):
                     opponent.DoMove(table)
                     if not rule.Check(table,score,2):
                         score.status = 3
+
+                if score.status == 1:
+                    if table.IsCompleted():
+                        score.status = 4
+                        
                 database.updateGame(id,table)
                 database.updateScore(score)
 
