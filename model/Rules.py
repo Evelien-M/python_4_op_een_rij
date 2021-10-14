@@ -6,8 +6,8 @@ class Rules:
         self.value = value
         if self.CheckHorizontal():
             if self.CheckVertical():
-                if self.CheckDiagonalNWZO():
-                    if self.CheckDiagonalNOZW():
+                if self.CheckAscendingDiagonal():
+                    if self.CheckDescendingDiagonal():
                         return True
 
         return False
@@ -45,28 +45,34 @@ class Rules:
                     return False 
         return True
 
-    def CheckDiagonalNWZO(self):
-        for y in range(self.table.h - 3):
+
+    def CheckAscendingDiagonal(self):
+        for y in range(3,self.table.h):
             for x in range(self.table.w - 3):
                 if self.table.Table[y][x].value == self.value:
-                    if self.table.Table[y+1][x+1].value == self.value:
-                        if self.table.Table[y+2][x+2].value == self.value:
-                            if self.table.Table[y+3][x+3].value == self.value:
+                    if self.table.Table[y-1][x+1].value == self.value:
+                        if self.table.Table[y-2][x+2].value == self.value:
+                            if self.table.Table[y-3][x+3].value == self.value:
                                 self.table.Table[y][x].marked = 1
-                                self.table.Table[y+1][x+1].marked = 1
-                                self.table.Table[y+2][x+2].marked = 1
-                                self.table.Table[y+3][x+3].marked = 1
+                                self.table.Table[y-1][x+1].marked = 1
+                                self.table.Table[y-2][x+2].marked = 1
+                                self.table.Table[y-3][x+3].marked = 1
+                                return False
+
+        return True
+
+    def CheckDescendingDiagonal(self):
+        for y in range(3,self.table.h):
+            for x in range(3,self.table.w):
+                if self.table.Table[y][x].value == self.value:
+                    if self.table.Table[y-1][x-1].value == self.value:
+                        if self.table.Table[y-2][x-2].value == self.value:
+                            if self.table.Table[y-3][x-3].value == self.value:
+                                self.table.Table[y][x].marked = 1
+                                self.table.Table[y-1][x-1].marked = 1
+                                self.table.Table[y-2][x-2].marked = 1
+                                self.table.Table[y-3][x-3].marked = 1
                                 return False
         return True
 
-    def CheckDiagonalNOZW(self):
-        return True
-        for y in range(self.table.h - 3):
-            for x in range(3,self.table.w):
-                if self.table.Table[y][x] == self.value:
-                    if self.table.Table[y+1][x-1] == self.value:
-                        if self.table.Table[y+2][x-2] == self.value:
-                            if self.table.Table[y+3][x-3] == self.value:
-                                return False
-        return True
 
