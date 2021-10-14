@@ -15,7 +15,8 @@ cur.execute('''CREATE TABLE `game_table` (
   `id` int(11) NOT NULL,
   `x` int(11) NOT NULL,
   `y` int(11) NOT NULL,
-  `value` int(11)
+  `value` int(11),
+  `marked` tinyint(1)
 )''')
 
 cur.execute('''CREATE TABLE `game_status` (

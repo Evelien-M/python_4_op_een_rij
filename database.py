@@ -4,7 +4,7 @@ import model
 import datetime
 import random
 from model.Score import Score
-from model.Table import Table
+from model.Table import Content, Table
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, "4opeenrij.db")
@@ -30,13 +30,13 @@ def createGame(name,difficulty):
         id = cur.lastrowid
         for x in range(7): 
             for y in range(6):
-                cur.execute("INSERT INTO game_table VALUES (" + str(id) + ", "+ str(x) +", "+ str(y) +", 0)")
+                cur.execute("INSERT INTO game_table VALUES (" + str(id) + ", "+ str(x) +", "+ str(y) +", 0,0)")
 
         # add random oponent turn 
         r = random.randrange(0, 2)
         if r == 1:
             column = random.randrange(0,7)
-            cur.execute("INSERT INTO game_table VALUES (" + str(id) + ", "+ str(column) +", "+ str(5) +", 2)")
+            cur.execute("INSERT INTO game_table VALUES (" + str(id) + ", "+ str(column) +", "+ str(5) +", 2,0)")
 
         con.commit()
         con.close()
@@ -52,7 +52,7 @@ def getGame(id):
         cur = con.cursor()
         list = Table()
         for r in cur.execute('SELECT * FROM game_table WHERE id = '+ str(id)):
-            list.Table[r[2]][r[1]] = r[3]
+            list.Table[r[2]][r[1]] = Content(r[3],r[4])
             
         con.close()
         return list
@@ -84,7 +84,7 @@ def updateGame(id,table):
         cur = con.cursor()
         for x in range(7): 
             for y in range(6):
-                cur.execute('UPDATE game_table SET value=' + str(table.Table[y][x]) + ' WHERE id = '+ str(id) +' AND x =' + str(x) + ' AND y =' + str(y))
+                cur.execute('UPDATE game_table SET value=' + str(table.Table[y][x].value) + ', marked=' + str(table.Table[y][x].marked) + ' WHERE id = '+ str(id) +' AND x =' + str(x) + ' AND y =' + str(y))
 
         con.commit()  
         con.close()

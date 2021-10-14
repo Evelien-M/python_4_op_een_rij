@@ -6,21 +6,21 @@ class Table:
 
     def CanAdd(self,x,input):
         for y in range(self.h):
-            value = self.Table[y][x]
+            value = self.Table[y][x].value
             if value == 0:
                 if y == self.h - 1:
-                    self.Table[y][x] = input 
+                    self.Table[y][x] = Content(input) 
                     return True
                 else: 
-                    if self.Table[y + 1][x] != 0:
-                        self.Table[y][x] = input
+                    if self.Table[y + 1][x].value != 0:
+                        self.Table[y][x] = Content(input)
                         return True 
         return False
 
     def IsCompleted(self):
         count = 0
         for x in range(self.w):
-            if self.Table[0][x] != 0:
+            if self.Table[0][x].value != 0:
                 count = count + 1
 
         if count == self.w:
@@ -30,5 +30,8 @@ class Table:
 
 
         
-
+class Content:
+    def __init__(self,value, marked = 0):
+        self.value = value
+        self.marked = marked
 

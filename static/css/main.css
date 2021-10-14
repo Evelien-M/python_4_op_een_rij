@@ -22,3 +22,11 @@
 {
     background: red;
 }
+
+.gametable .marked-1::before {
+    content: "";
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: white;
+}
