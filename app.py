@@ -51,8 +51,9 @@ def game(id):
                     if table.IsCompleted():
                         score.status = 4
                         
-                database.updateGame(id,table)
                 database.updateScore(score)
+                score = database.getScore(id)
+                database.updateGame(id,table)
 
     return render_template("game.html",score=score,table=table)
 

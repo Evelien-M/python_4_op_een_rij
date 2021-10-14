@@ -67,7 +67,11 @@ def getScore(id):
         
         for r in cur.execute('SELECT * FROM score WHERE id = '+ str(id) + ' LIMIT 1'):
             score = Score(id,r[1],r[2],r[3],r[4],r[5])
-            
+            status = ""
+            for r in cur.execute('SELECT * FROM game_status WHERE id = '+ str(score.status) + ' LIMIT 1'):
+                status = r[1]
+            score.statusName = status
+
         con.close()
         return score
     except Exception as e:
