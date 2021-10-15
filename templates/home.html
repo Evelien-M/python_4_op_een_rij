@@ -21,12 +21,14 @@
                 <th>Time</th>
                 <th>Name</th>
                 <th>Date</th>
+                <th>Size</th>
             </tr>
             {% for score in scores %}
             <tr>
                 <td>{{score.time}}</td>
                 <td>{{score.name}}</td>
                 <td>{{score.date}}</td>
+                <td>{{score.width}}×{{score.height}}</td>
             </tr>
             {% endfor %}
         </table>

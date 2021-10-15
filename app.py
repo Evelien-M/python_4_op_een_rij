@@ -19,7 +19,7 @@ def index():
         if diff != "easy" and diff != "hard":
             return redirect('/')
 
-        id = database.createGame(playername,diff)
+        id = database.createGame(playername,diff,7,6)
         return redirect(url_for('game', id=id))
     else:
         scores = database.getHighscoreHomepage()
@@ -29,7 +29,7 @@ def index():
 @app.route('/game/<int:id>',methods=['GET', 'POST'])
 def game(id):
     score = database.getScore(id)
-    table = database.getGame(id)
+    table = database.getGame(score)
     opponent = EasyOpponent()
     rule = Rules()
 

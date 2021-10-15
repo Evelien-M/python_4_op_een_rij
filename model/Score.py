@@ -2,12 +2,14 @@ from datetime import datetime
 import time
 
 class Score:
-    def __init__(self,id,name,time,date,difficulty,status,statusName = None):
+    def __init__(self,id,name,time,date,difficulty,width,height,status,statusName = None):
         self.id = id
         self.name = name
         self.time = time
         self.date = date
         self.difficulty = difficulty
+        self.width = width
+        self.height = height
         self.status = status
         self.statusName = statusName
 

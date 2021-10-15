@@ -15,18 +15,18 @@ def getHighscoreHomepage():
     cur = con.cursor()
     list = []
     for r in cur.execute('SELECT * FROM score WHERE status_id = 2 ORDER BY time ASC LIMIT 10'):
-        score = Score(r[0],r[1],r[2],r[3],r[4],r[5])
+        score = Score(r[0],r[1],r[2],r[3],r[4],r[5],r[6],r[7])
         list.append(score)
     
     con.close()
     return list
 
 
-def createGame(name,difficulty):
+def createGame(name,difficulty,width,height):
     try:
         con = sqlite3.connect(db_path)
         cur = con.cursor()
-        cur.execute("INSERT INTO score VALUES (NULL, '"+ str(name) +"', 0, '"+ str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) +"', '"+ str(difficulty) +"', 1)")
+        cur.execute("INSERT INTO score VALUES (NULL, '"+ str(name) +"', 0, '"+ str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) +"', '"+ str(difficulty) +"', "+ str(width) +", "+ str(height) +", 1)")
         id = cur.lastrowid
         for x in range(7): 
             for y in range(6):
@@ -46,12 +46,12 @@ def createGame(name,difficulty):
         return None
 
 
-def getGame(id):
+def getGame(score):
     try:
         con = sqlite3.connect(db_path)
         cur = con.cursor()
         list = Table()
-        for r in cur.execute('SELECT * FROM game_table WHERE id = '+ str(id)):
+        for r in cur.execute('SELECT * FROM game_table WHERE id = '+ str(score.id)):
             list.Table[r[2]][r[1]] = Content(r[3],r[4])
             
         con.close()
@@ -66,7 +66,7 @@ def getScore(id):
         cur = con.cursor()
         
         for r in cur.execute('SELECT * FROM score WHERE id = '+ str(id) + ' LIMIT 1'):
-            score = Score(id,r[1],r[2],r[3],r[4],r[5])
+            score = Score(id,r[1],r[2],r[3],r[4],r[5],r[6],r[7])
             status = ""
             for r in cur.execute('SELECT * FROM game_status WHERE id = '+ str(score.status) + ' LIMIT 1'):
                 status = r[1]
