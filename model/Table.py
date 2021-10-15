@@ -5,6 +5,8 @@ class Table:
         self.Table = [[0 for x in range(self.w)] for y in range(self.h)] 
 
     def CanAdd(self,x,input):
+        if x > self.w - 1:
+            x = self.w - 1
         for y in range(self.h):
             value = self.Table[y][x].value
             if value == 0:

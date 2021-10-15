@@ -27,10 +27,10 @@ cur.execute('''CREATE TABLE `game_status` (
 con.commit()
 
 # Insert a row of data
-cur.execute("INSERT INTO game_status VALUES (1, 'playable')")
-cur.execute("INSERT INTO game_status VALUES (2, 'won')")
-cur.execute("INSERT INTO game_status VALUES (3, 'lost')")
-cur.execute("INSERT INTO game_status VALUES (4, 'tie')")
+cur.execute("INSERT INTO game_status VALUES (1, 'Speelbaar')")
+cur.execute("INSERT INTO game_status VALUES (2, 'Gewonnen')")
+cur.execute("INSERT INTO game_status VALUES (3, 'Verloren')")
+cur.execute("INSERT INTO game_status VALUES (4, 'Gelijkspel')")
 
 cur.execute("INSERT INTO score VALUES (1, 'MARCO BORSATO', 10, '2021-10-11 00:00:00', 'easy', 7, 6, 2)")
 cur.execute("INSERT INTO score VALUES (2, 'MARCO BORSATO', 12, '2021-10-11 00:00:00', 'easy', 7, 6, 4)")

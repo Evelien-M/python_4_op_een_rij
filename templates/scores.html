@@ -1,0 +1,43 @@
+{% extends 'index.html' %}
+
+
+{% block head %}
+    Score
+
+{% endblock %}
+
+    
+{% block title %}
+Score
+{% endblock %}
+
+
+{% block body %}
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Tijd</th>
+        <th>Naam</th>
+        <th>Datum</th>
+        <th>Grootte</th>
+        <th>Status</th>
+    </tr>
+    {% for score in scores %}
+    <tr>
+        <td>{{score.id}}</td>
+        <td>{{score.time}}</td>
+        <td>{{score.name}}</td>
+        <td>{{score.date}}</td>
+        <td>{{score.width}}×{{score.height}}</td>
+        <td><a href="../../../game/{{score.id}}">{{score.statusName}}</a></td>
+    </tr>
+    {% endfor %}
+</table>
+<p>Total = {{total}}</p>
+{% if page > 0 %}
+    <a class="btn btn-primary" href="/scores/{{table}}/{{order}}/{{page - 1}}" role="button"><</a>
+{% endif %}
+{% if page < (total - 20) / 20 %}
+    <a class="btn btn-primary" href="/scores/{{table}}/{{order}}/{{page + 1}}" role="button">></a>
+{% endif %}
+{% endblock %}

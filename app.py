@@ -19,7 +19,18 @@ def index():
         if diff != "easy" and diff != "hard":
             return redirect('/')
 
-        id = database.createGame(playername,diff,7,6)
+        width = request.form['width']
+        height = request.form['height']
+        try:
+            width = int(width)
+            height = int(height)
+            if width < 4 or width > 9 or height < 4 or height > 9:
+                raise ValueError('Wrong number.')
+        except Exception:
+            width = 7
+            height = 6
+
+        id = database.createGame(playername,diff,width,height)
         return redirect(url_for('game', id=id))
     else:
         scores = database.getHighscoreHomepage()
@@ -57,6 +68,17 @@ def game(id):
 
     return render_template("game.html",score=score,table=table)
 
+
+@app.route('/scores/<string:table>/<string:order>/<int:page>',methods=['GET', 'POST'])
+def scores(table,order,page):
+    try:
+        offset = int(page) * 20
+    except Exception:
+        offset = 0
+
+    scores = database.getScoreAll(table,order,offset)
+    total = database.getTotalAmountScoreAll()
+    return render_template("scores.html",scores=scores,total=total,table=table,order=order,page=page)
 
 
 

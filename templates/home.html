@@ -18,10 +18,10 @@
         <h3>Highscores:</h3>
         <table>
             <tr>
-                <th>Time</th>
-                <th>Name</th>
-                <th>Date</th>
-                <th>Size</th>
+                <th>Tijd</th>
+                <th>Naam</th>
+                <th>Datum</th>
+                <th>Grootte</th>
             </tr>
             {% for score in scores %}
             <tr>
@@ -38,13 +38,33 @@
         <form action="/" method="POST">
             <div class="row">
                 <div class="col-md-6">
-                    <input type="text" class="form-control" minlength="1" maxlength="45" name="name" placeholder="Name" required>
+                    <div class="form-group">
+                        <label for="name">Naam:</label>
+                        <input type="text" class="form-control" minlength="1" maxlength="45" name="name" placeholder="Name" required>
+                    </div>
                 </div>
                 <div class="col-md-6">
-                    <select name="difficulty" class="form-control">
-                        <option value="easy" selected>Easy</option>
-                        <option value="hard">Hard</option>
-                    </select>
+                    <div class="form-group">
+                        <label for="difficulty">Moeilijkheid:</label>
+                        <select name="difficulty" class="form-control">
+                            <option value="easy" selected>Makkelijk</option>
+                            <option value="hard">Moeilijk</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="width">Breedte:</label>
+                        <input type="number" class="form-control" min="4" max="9" name="width" value="7" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="width">Hoogte:</label>
+                        <input type="number" class="form-control" min="4" max="9" name="height" value="6" required>
+                    </div>
                 </div>
             </div>
             <div class="text-center">
