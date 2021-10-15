@@ -28,15 +28,15 @@ def createGame(name,difficulty,width,height):
         cur = con.cursor()
         cur.execute("INSERT INTO score VALUES (NULL, '"+ str(name) +"', 0, '"+ str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) +"', '"+ str(difficulty) +"', "+ str(width) +", "+ str(height) +", 1)")
         id = cur.lastrowid
-        for x in range(7): 
-            for y in range(6):
+        for x in range(width): 
+            for y in range(height):
                 cur.execute("INSERT INTO game_table VALUES (" + str(id) + ", "+ str(x) +", "+ str(y) +", 0,0)")
 
         # add random oponent turn 
         r = random.randrange(0, 2)
         if r == 1:
-            column = random.randrange(0,7)
-            cur.execute("INSERT INTO game_table VALUES (" + str(id) + ", "+ str(column) +", "+ str(5) +", 2,0)")
+            column = random.randrange(0,width)
+            cur.execute("INSERT INTO game_table VALUES (" + str(id) + ", "+ str(column) +", "+ str(height - 1) +", 2,0)")
 
         con.commit()
         con.close()
@@ -50,7 +50,7 @@ def getGame(score):
     try:
         con = sqlite3.connect(db_path)
         cur = con.cursor()
-        list = Table()
+        list = Table(score.width,score.height)
         for r in cur.execute('SELECT * FROM game_table WHERE id = '+ str(score.id)):
             list.Table[r[2]][r[1]] = Content(r[3],r[4])
             
@@ -82,8 +82,8 @@ def updateGame(id,table):
     try:
         con = sqlite3.connect(db_path)
         cur = con.cursor()
-        for x in range(7): 
-            for y in range(6):
+        for x in range(table.w): 
+            for y in range(table.h):
                 cur.execute('UPDATE game_table SET value=' + str(table.Table[y][x].value) + ', marked=' + str(table.Table[y][x].marked) + ' WHERE id = '+ str(id) +' AND x =' + str(x) + ' AND y =' + str(y))
 
         con.commit()  

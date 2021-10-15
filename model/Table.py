@@ -1,7 +1,7 @@
 class Table:
-    def __init__(self):
-        self.w = 7
-        self.h = 6
+    def __init__(self,width,height):
+        self.w = width
+        self.h = height
         self.Table = [[0 for x in range(self.w)] for y in range(self.h)] 
 
     def CanAdd(self,x,input):
