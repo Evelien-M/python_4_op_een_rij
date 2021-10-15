@@ -4,6 +4,7 @@ from model.Rules import Rules
 from opponent.easyOpponent import EasyOpponent
 from model.Score import Score
 from model.Table import Table
+from opponent.hardOpponent import HardOpponent
 
 app = Flask(__name__)
 table = None
@@ -41,7 +42,10 @@ def index():
 def game(id):
     score = database.getScore(id)
     table = database.getGame(score)
-    opponent = EasyOpponent()
+    if(score.difficulty == "hard"):
+        opponent = HardOpponent()
+    else:
+        opponent = EasyOpponent()
     rule = Rules()
 
     if request.method == 'POST':
@@ -76,6 +80,10 @@ def scores(table,order,page,name):
     except Exception:
         offset = 0
 
+    if request.method == 'POST':
+        name = request.form['inputname'].upper()
+        return redirect('/scores/' + str(table) + '/' + str(order) + '/' + str(page) + '/' + str(name))
+
     if (name == "*"):
         scores = database.getScoreAll(table,order,offset)
         total = database.getTotalAmountScoreAll()
@@ -83,7 +91,7 @@ def scores(table,order,page,name):
         scores = database.getScoreName(name,table,order,offset)
         total = database.getTotalAmountScoreName(name)
 
-    return render_template("scores.html",scores=scores,total=total,table=table,order=order,page=page)
+    return render_template("scores.html",scores=scores,total=total,table=table,order=order,page=page,name=name)
 
 
 

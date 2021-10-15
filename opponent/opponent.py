@@ -3,6 +3,6 @@ class Opponent:
         pass
 
     def DoMove(table):
-        print("vvvvvvvvvvvv")
+        pass
 
     

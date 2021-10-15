@@ -9,17 +9,22 @@
     
 {% block title %}
 Score
+<form action="/scores/{{table}}/{{order}}/{{page}}/*" method="POST" class="form-inline my-2 my-lg-0">
+    <input class="form-control mr-sm-2" type="search" name="inputname" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+</form>
 {% endblock %}
 
 
 {% block body %}
-<table>
+<table class="score-table">
     <tr>
         <th>Id</th>
         <th>Tijd</th>
         <th>Naam</th>
         <th>Datum</th>
         <th>Grootte</th>
+        <th>Moeilijkheid</th>
         <th>Status</th>
     </tr>
     {% for score in scores %}
@@ -29,15 +34,24 @@ Score
         <td>{{score.name}}</td>
         <td>{{score.date}}</td>
         <td>{{score.width}}×{{score.height}}</td>
-        <td><a href="../../../../game/{{score.id}}">{{score.statusName}}</a></td>
+        <td>{{score.difficulty}}</td>
+        <td><a href="../../../../game/{{score.id}}" class="status-{{score.status}}">{{score.statusName}}</a></td>
     </tr>
     {% endfor %}
 </table>
-<p>Total = {{total}}</p>
-{% if page > 0 %}
-    <a class="btn btn-primary" href="/scores/{{table}}/{{order}}/{{page - 1}}" role="button"><</a>
-{% endif %}
-{% if page < (total - 20) / 20 %}
-    <a class="btn btn-primary" href="/scores/{{table}}/{{order}}/{{page + 1}}" role="button">></a>
-{% endif %}
+<p class="score-total">Totaal: {{total}}</p>
+<div class="score-pagination">
+    <div class="row">
+        <div class="col-6">
+            {% if page > 0 %}
+                <a class="btn btn-primary" href="/scores/{{table}}/{{order}}/{{page - 1}}/{{name}}" role="button"><</a>
+            {% endif %}
+        </div>
+        <div class="col-6 text-right">
+            {% if page < (total - 20) / 20 %}
+                <a class="btn btn-primary" href="/scores/{{table}}/{{order}}/{{page + 1}}/{{name}}" role="button">></a>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}

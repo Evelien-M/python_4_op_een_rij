@@ -1,18 +1,11 @@
-import random
-
 from opponent.opponent import Opponent
 
-class EasyOpponent(Opponent):
+class HardOpponent(Opponent):
     def __init__(self):
         pass
 
     def DoMove(self,table):
-        moves = []
-        for i in range(table.w):
-            moves.append(i)
-        random.shuffle(moves)
+        moves = [0,1,2,3,4,5,6]
         for x in range(len(moves)):
             if table.CanAdd(moves[x],2):
                 break
-
-        
