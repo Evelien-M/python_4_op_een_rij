@@ -1,8 +1,7 @@
 class Rules:
     # returns true is game is stil playable
-    def Check(self,table,score,value):
+    def Check(self,table,value):
         self.table = table
-        self.score = score
         self.value = value
         if self.CheckHorizontal():
             if self.CheckVertical():

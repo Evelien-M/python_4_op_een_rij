@@ -54,11 +54,11 @@ def game(id):
 
         if score.status == 1:
             if table.CanAdd(c,1):
-                if not rule.Check(table,score,1):
+                if not rule.Check(table,1):
                     score.status = 2
                 if score.status == 1:
                     opponent.DoMove(table)
-                    if not rule.Check(table,score,2):
+                    if not rule.Check(table,2):
                         score.status = 3
 
                 if score.status == 1:
