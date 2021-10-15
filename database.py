@@ -38,6 +38,36 @@ def getScoreAll(table,order,offset):
     
     return list
 
+def getScoreName(name,table,order,offset):
+    list = []
+    try:
+        con = sqlite3.connect(db_path)
+        cur = con.cursor()
+        for r in cur.execute('SELECT * FROM score INNER JOIN game_status ON score.status_id=game_status.id WHERE player = "'+str(name)+'" ORDER BY '+str(table)+' '+str(order)+' LIMIT 20 OFFSET ' + str(offset)):
+            score = Score(r[0],r[1],r[2],r[3],r[4],r[5],r[6],r[7],r[9])
+            
+            list.append(score)
+        
+        con.close()
+    except Exception as e: 
+        print(str(e))
+    
+    return list
+
+def getTotalAmountScoreName(name):
+    i = 0
+    try:
+        con = sqlite3.connect(db_path)
+        cur = con.cursor()
+        for r in cur.execute('SELECT count(*) FROM score WHERE player = "'+ str(name) + '"'):
+            i = r[0]
+        
+        con.close()
+    except Exception as e: 
+        print(str(e))
+    
+    return i
+
 def getTotalAmountScoreAll():
     i = 0
     try:

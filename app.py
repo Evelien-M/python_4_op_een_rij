@@ -12,7 +12,7 @@ table = None
 def index():
     if request.method == 'POST':
         playername = request.form['name'].upper()
-        if len(playername) > 45 or len(playername) < 1:
+        if len(playername) > 45 or len(playername) < 1 or playername == "*":
             return redirect('/')
 
         diff = request.form['difficulty']
@@ -69,15 +69,20 @@ def game(id):
     return render_template("game.html",score=score,table=table)
 
 
-@app.route('/scores/<string:table>/<string:order>/<int:page>',methods=['GET', 'POST'])
-def scores(table,order,page):
+@app.route('/scores/<string:table>/<string:order>/<int:page>/<string:name>',methods=['GET', 'POST'])
+def scores(table,order,page,name):
     try:
         offset = int(page) * 20
     except Exception:
         offset = 0
 
-    scores = database.getScoreAll(table,order,offset)
-    total = database.getTotalAmountScoreAll()
+    if (name == "*"):
+        scores = database.getScoreAll(table,order,offset)
+        total = database.getTotalAmountScoreAll()
+    else:
+        scores = database.getScoreName(name,table,order,offset)
+        total = database.getTotalAmountScoreName(name)
+
     return render_template("scores.html",scores=scores,total=total,table=table,order=order,page=page)
 
 
