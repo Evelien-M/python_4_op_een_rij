@@ -12,21 +12,22 @@ class HardOpponent(Opponent):
         for i in range(table.w):
             moves.append(i)
 
+        random.shuffle(moves)
         a = self.CheckWinningMove(moves,table)
         if a is not None:
-            print("aaaaaaaaa")
             table.CanAdd(a,2)
         else: 
             b = self.CheckPlayerWinningMove(moves,table)
             if b is not None:
-                print("bbbbbbbbbb")
                 table.CanAdd(b,2)
             else:
-                random.shuffle(moves)
-                for x in range(len(moves)):
-                    # todo: check if adding moves does not have finishing move oponent
-                    if table.CanAdd(moves[x],2):
-                        break
+                c = self.IsBestMove(moves,table)
+                if c is not None:
+                    table.CanAdd(c,2)
+                else:
+                    for x in range(len(moves)):
+                        if table.CanAdd(moves[x],2):
+                            break
 
     def MakeCopy(self,table):
         copyTable = Table(table.w,table.h)
@@ -43,7 +44,7 @@ class HardOpponent(Opponent):
             temp = self.MakeCopy(table)
             if temp.CanAdd(moves[x],2):
                 if not rule.Check(temp,2):
-                    return x
+                    return moves[x]
         return None
 
 
@@ -53,5 +54,14 @@ class HardOpponent(Opponent):
             temp = self.MakeCopy(table)
             if temp.CanAdd(moves[x],1):
                 if not rule.Check(temp,1):
-                    return x
+                    return moves[x]
+        return None
+
+    def IsBestMove(self,moves,table):
+        for x in range(len(moves)):
+            temp = self.MakeCopy(table)
+            if temp.CanAdd(moves[x],2):
+                if self.CheckPlayerWinningMove(moves,temp) is None:
+                    return moves[x]
+
         return None
