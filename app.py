@@ -14,7 +14,8 @@ table = None
 def index():
     if request.method == 'POST':
         playername = request.form['name'].upper()
-        if len(playername) > 45 or len(playername) < 1 or any(not c.isalnum() for c in playername):
+        special_characters = "!@#$%^&*()-+?_=,<>/'"
+        if len(playername) > 45 or len(playername) < 1 or any(c in special_characters for c in playername):
             return redirect('/')
 
         diff = request.form['difficulty']
