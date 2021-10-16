@@ -15,12 +15,12 @@
 
 .gametable .value-1
 {
-    background: yellow;
+    background: #007bff;
 }
 
 .gametable .value-2
 {
-    background: red;
+    background: #ffc107;
 }
 
 .gametable .marked-1::before {
@@ -33,6 +33,28 @@
     background: white;
     margin-left: 12.5px;
     margin-top: -12.5px;
+}
+
+.mt-30 {
+    margin-top: 30px
+}
+
+.gametable thead tr {
+    height: 40px;
+}
+
+button.btn.btn-primary.game-add-btn:hover::before {
+    height: 600px;
+}
+
+button.btn.btn-primary.game-add-btn::before {
+    content: "";
+    position: absolute;
+    margin-top: 30px;
+    margin-left: -14px;
+    width: 60px;
+    height: 0px;
+    background: rgba(255, 255, 255, 0.25);
 }
 
 .highscore-table {

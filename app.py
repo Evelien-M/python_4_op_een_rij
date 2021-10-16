@@ -5,6 +5,7 @@ from opponent.easyOpponent import EasyOpponent
 from model.Score import Score
 from model.Table import Table
 from opponent.hardOpponent import HardOpponent
+from opponent.impossibleOponent import ImpossibleOpponent
 
 app = Flask(__name__)
 table = None
@@ -13,11 +14,11 @@ table = None
 def index():
     if request.method == 'POST':
         playername = request.form['name'].upper()
-        if len(playername) > 45 or len(playername) < 1 or playername == "*":
+        if len(playername) > 45 or len(playername) < 1 or any(not c.isalnum() for c in playername):
             return redirect('/')
 
         diff = request.form['difficulty']
-        if diff != "easy" and diff != "hard":
+        if diff != "Makkelijk" and diff != "Moeilijk" and diff != "Onmogelijk":
             return redirect('/')
 
         width = request.form['width']
@@ -42,10 +43,13 @@ def index():
 def game(id):
     score = database.getScore(id)
     table = database.getGame(score)
-    if(score.difficulty == "hard"):
+    if(score.difficulty == "Moeilijk"):
         opponent = HardOpponent()
     else:
-        opponent = EasyOpponent()
+        if score.difficulty == "Onmogelijk":
+            opponent = ImpossibleOpponent()
+        else:
+            opponent = EasyOpponent()
     rule = Rules()
 
     if request.method == 'POST':
@@ -84,16 +88,28 @@ def scores(table,order,page,name):
         name = request.form['inputname'].upper()
         return redirect('/scores/' + str(table) + '/' + str(order) + '/' + str(page) + '/' + str(name))
 
-    if (name == "*"):
-        scores = database.getScoreAll(table,order,offset)
-        total = database.getTotalAmountScoreAll()
-    else:
-        scores = database.getScoreName(name,table,order,offset)
-        total = database.getTotalAmountScoreName(name)
+    scores = database.getScoreName(name,table,order,offset)
+    total = database.getTotalAmountScoreName(name)
 
     return render_template("scores.html",scores=scores,total=total,table=table,order=order,page=page,name=name)
 
+@app.route('/scores/<string:table>/<string:order>/<int:page>/',methods=['GET', 'POST'])
+def allscores(table,order,page):
+    try:
+        offset = int(page) * 20
+    except Exception:
+        offset = 0
 
+    scores = database.getScoreAll(table,order,offset)
+    total = database.getTotalAmountScoreAll()
+
+    name = ""
+    return render_template("scores.html",scores=scores,total=total,table=table,order=order,page=page,name=name)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 if __name__ == '__main__':
     app.run(debug=True)

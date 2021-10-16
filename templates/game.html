@@ -23,7 +23,7 @@
                         {%for i in range(score.width)%}
                             <th>
                                 {% if table.Table[0][i].value == 0 and score.status == 1 %}
-                                    <button type="button" value="Add" onclick="setColumn({{i}})" name="{{i}}" class="btn btn-primary">Add</button>  
+                                    <button type="button" value="Add" onclick="setColumn({{i}})" name="{{i}}" class="btn btn-primary game-add-btn">Add</button>  
                                 {% endif %}
                             </th>
                         {% endfor %}
@@ -42,10 +42,31 @@
         </table>
     </div>
     <div class="col-md-6">
-        <h1>{{score.name}}</h1>
-        <h3>Difficulty: {{score.difficulty}}</h3>
-        <h3>status: {{score.statusName}}</h3>
-        <h3>time: {{score.time}}</h3>
+        <div class="card">
+            <div class="card-header">
+                <h3>{{score.name}}</h3>
+            </div>
+            <div class="card-body">
+                <table style="width: 100%">
+                    <tr>
+                        <td><h3>Status</h3></td>
+                        <td class="status-{{score.status}}"><h3>{{score.statusName}}</h3></td>
+                    </tr>
+                    <tr>
+                        <td><h3>Moeilijkheid</h3></td>
+                        <td><h3>{{score.difficulty}}</h3></td>
+                    </tr>
+                    <tr>
+                        <td><h3>Tijd</h3></td>
+                        <td><h3>{{score.time}}</h3></td>
+                    </tr>
+                </table>
+                <div class="text-center" style="margin-top: 30px">
+                    <a href="/scores/time/asc/0/{{score.name}}" class="btn btn-primary">Scoren</a>
+                </div>
+            </div>
+          </div>
+        <h1></h1>
     </div>
 </div>
 {% endblock %}

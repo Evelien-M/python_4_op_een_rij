@@ -16,7 +16,7 @@
 <div class="row">
     <div class="col-md-6">
         <h3>Highscores:</h3>
-        <table class="highscore-table">
+        <table class="highscore-table mt-30">
             <tr>
                 <th>Tijd</th>
                 <th>Naam</th>
@@ -34,8 +34,8 @@
         </table>
     </div>
     <div class="col-md-6">
-        <h3>New game:</h3>
-        <form action="/" method="POST">
+        <h3>Nieuw spel:</h3>
+        <form action="/" method="POST" class="mt-30">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -47,8 +47,9 @@
                     <div class="form-group">
                         <label for="difficulty">Moeilijkheid:</label>
                         <select name="difficulty" class="form-control">
-                            <option value="easy" selected>Makkelijk</option>
-                            <option value="hard">Moeilijk</option>
+                            <option value="Makkelijk" selected>Makkelijk</option>
+                            <option value="Moeilijk">Moeilijk</option>
+                            <option value="Onmogelijk">Onmogelijk</option>
                         </select>
                     </div>
                 </div>
