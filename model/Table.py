@@ -4,6 +4,7 @@ class Table:
         self.h = height
         self.Table = [[0 for x in range(self.w)] for y in range(self.h)] 
 
+    # returns false if table column is full
     def CanAdd(self,x,input):
         if x > self.w - 1:
             x = self.w - 1

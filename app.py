@@ -15,15 +15,19 @@ def index():
     if request.method == 'POST':
         playername = request.form['name'].upper()
         special_characters = "!@#$%^&*()-+?_=,<>/'"
+        # check if valid name input
         if len(playername) > 45 or len(playername) < 1 or any(c in special_characters for c in playername):
             return redirect('/')
 
+        # check if valid difficulty input
         diff = request.form['difficulty']
         if diff != "Makkelijk" and diff != "Moeilijk" and diff != "Onmogelijk":
             return redirect('/')
 
         width = request.form['width']
         height = request.form['height']
+
+        # check valid size input
         try:
             width = int(width)
             height = int(height)
@@ -44,6 +48,7 @@ def index():
 def game(id):
     score = database.getScore(id)
     table = database.getGame(score)
+    # check difficulty
     if(score.difficulty == "Moeilijk"):
         opponent = HardOpponent()
     else:
@@ -57,18 +62,19 @@ def game(id):
         column = request.form['column']
         c = int(column)
 
+        # checks if status is still playable
         if score.status == 1:
-            if table.CanAdd(c,1):
+            if table.CanAdd(c,1): # do player move
                 if not rule.Check(table,1):
-                    score.status = 2
+                    score.status = 2 # player won
                 if score.status == 1:
-                    opponent.DoMove(table)
+                    opponent.DoMove(table) 
                     if not rule.Check(table,2):
-                        score.status = 3
+                        score.status = 3 # opponent wont
 
                 if score.status == 1:
                     if table.IsCompleted():
-                        score.status = 4
+                        score.status = 4 # tie
                         
                 score.UpdateTime()
                 database.updateScore(score)
@@ -77,7 +83,7 @@ def game(id):
 
     return render_template("game.html",score=score,table=table)
 
-
+# get all scores from name
 @app.route('/scores/<string:table>/<string:order>/<int:page>/<string:name>',methods=['GET', 'POST'])
 def scores(table,order,page,name):
     try:
@@ -94,6 +100,7 @@ def scores(table,order,page,name):
 
     return render_template("scores.html",scores=scores,total=total,table=table,order=order,page=page,name=name)
 
+# get all scores
 @app.route('/scores/<string:table>/<string:order>/<int:page>/',methods=['GET', 'POST'])
 def allscores(table,order,page):
     try:

@@ -126,12 +126,8 @@ def getScore(id):
         con = sqlite3.connect(db_path)
         cur = con.cursor()
         
-        for r in cur.execute('SELECT * FROM score WHERE id = '+ str(id) + ' LIMIT 1'):
-            score = Score(id,r[1],r[2],r[3],r[4],r[5],r[6],r[7])
-            status = ""
-            for r in cur.execute('SELECT * FROM game_status WHERE id = '+ str(score.status) + ' LIMIT 1'):
-                status = r[1]
-            score.statusName = status
+        for r in cur.execute('SELECT * FROM score INNER JOIN game_status ON score.status_id=game_status.id WHERE score.id = '+ str(id) + ' LIMIT 1'):
+            score = Score(id,r[1],r[2],r[3],r[4],r[5],r[6],r[7],r[9])
 
         con.close()
         return score

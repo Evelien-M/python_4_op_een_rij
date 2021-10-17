@@ -47,7 +47,7 @@ class HardOpponent(Opponent):
                     return moves[x]
         return None
 
-
+    # checks if the player can win
     def CheckPlayerWinningMove(self,moves,table):
         rule = Rules()
         for x in range(len(moves)):
@@ -57,6 +57,7 @@ class HardOpponent(Opponent):
                     return moves[x]
         return None
 
+    # checks whether the move does not allow the player to win
     def IsBestMove(self,moves,table):
         for x in range(len(moves)):
             temp = self.MakeCopy(table)
